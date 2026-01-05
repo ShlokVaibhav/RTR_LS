@@ -7,6 +7,20 @@
     "text": "Analog Tutorial"
   },
   {
+    "objectID": "RTR/Sub-1V-Dynamic-LS.html",
+    "href": "RTR/Sub-1V-Dynamic-LS.html",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "The input common mode is clamped at a certain threshold for sub 1V design"
+  },
+  {
+    "objectID": "RTR/Crude4xMirror.html",
+    "href": "RTR/Crude4xMirror.html",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "Crude 4x Current mirror, gives 40% gm variation"
+  },
+  {
     "objectID": "Blog.html",
     "href": "Blog.html",
     "title": "HomePage",
@@ -77,11 +91,18 @@
     "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work.\nAI was used to generate qualitative plots in this work."
   },
   {
+    "objectID": "RTR/Min_Max_Selector.html",
+    "href": "RTR/Min_Max_Selector.html",
+    "title": "Min Max Selector",
+    "section": "",
+    "text": "Selects the stronger of the two input pairs to maintain constant gm"
+  },
+  {
     "objectID": "RTR/Zener.html",
     "href": "RTR/Zener.html",
     "title": "Rail-to-Rail Input Amplifiers",
     "section": "",
-    "text": "sfsdfs",
+    "text": "An electronic zener is used",
     "crumbs": [
       "Strong Inversion",
       "Electronic Zener"
