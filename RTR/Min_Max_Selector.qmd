@@ -1,0 +1,4 @@
+---
+title: "Min Max Selector"
+---
+Selects the stronger of the two input pairs to maintain constant gm

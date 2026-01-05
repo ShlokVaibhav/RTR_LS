@@ -3,7 +3,7 @@ title: "Rail-to-Rail Input Amplifiers"
 sidebar: analog
 
 author:
-  - name: "Tejas Ketar"
+  - name: "Tejas Ketkar"
     affiliation: "Indian Institute of Technology, Kanpur (2018-23)"
   - name: "Shlok Vaibhav"
     affiliation: "Indian Institute of Technology, Bombay (2018-23)"
