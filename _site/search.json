@@ -1,0 +1,153 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "Work.html",
+    "href": "Work.html",
+    "title": "Work",
+    "section": "",
+    "text": "Analog Tutorial"
+  },
+  {
+    "objectID": "Blog.html",
+    "href": "Blog.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "analog_pages.html",
+    "href": "analog_pages.html",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "RTR/Zener.html",
+    "href": "RTR/Zener.html",
+    "title": "Shlok Vaibhav",
+    "section": "",
+    "text": "sfsdfs",
+    "crumbs": [
+      "Strong Inversion",
+      "Electronic Zener"
+    ]
+  },
+  {
+    "objectID": "analog_pages.html#weak-inversion-operation-of-mosfets-enables-ultra-low-power-analog-circuit-design-by-exploiting-exponential-currentvoltage-characteristics.-this-paper-reviews-the-theoretical-basis-of-weak-inversion-practical-modeling-considerations-and-representative-circuit-examples-suitable-for-low-supply-applications.",
+    "href": "analog_pages.html#weak-inversion-operation-of-mosfets-enables-ultra-low-power-analog-circuit-design-by-exploiting-exponential-currentvoltage-characteristics.-this-paper-reviews-the-theoretical-basis-of-weak-inversion-practical-modeling-considerations-and-representative-circuit-examples-suitable-for-low-supply-applications.",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "2 Weak inversion operation of MOSFETs enables ultra-low-power analog circuit design by exploiting exponential current–voltage characteristics. This paper reviews the theoretical basis of weak inversion, practical modeling considerations, and representative circuit examples suitable for low-supply applications.",
+    "text": "2 Weak inversion operation of MOSFETs enables ultra-low-power analog circuit design by exploiting exponential current–voltage characteristics. This paper reviews the theoretical basis of weak inversion, practical modeling considerations, and representative circuit examples suitable for low-supply applications."
+  },
+  {
+    "objectID": "analog_pages.html#the-input-stage-of-op-amp-may-need-to-tolerate-rail-to-rail-swing-in-case-of-unity-feedback-configuration-under-a-common-mode-that-swings-rail-to-rail-1.-in-this-tutorial-we-try-to-understand-simulate-and-explain-some-popular-choices-found-in-literature-survey-123",
+    "href": "analog_pages.html#the-input-stage-of-op-amp-may-need-to-tolerate-rail-to-rail-swing-in-case-of-unity-feedback-configuration-under-a-common-mode-that-swings-rail-to-rail-1.-in-this-tutorial-we-try-to-understand-simulate-and-explain-some-popular-choices-found-in-literature-survey-123",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "2 The input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. In this tutorial, we try to understand, simulate and explain some popular choices found in literature survey [1,2,3]",
+    "text": "2 The input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. In this tutorial, we try to understand, simulate and explain some popular choices found in literature survey [1,2,3]"
+  },
+  {
+    "objectID": "analog_pages.html#introduction",
+    "href": "analog_pages.html#introduction",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "2 Introduction",
+    "text": "2 Introduction\nThe input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. Usually, there is only a single input pair and the input is directly fed to the gates of this pair. Rail-to-Rail input swing in unity configuration requires one of the following choices:\n\nUse of complementary input pairs - a PMOS and an NMOS input pair\nShifting the common-mode of the input fed to a single input pair\n\nThe first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. Once these two constraints are settled, various creative topologies can be employed competing against each other on following specs:\n\nCMRR\nTHD\nSlew Rate\nPower burnt\nUGB variation across input variation\n\nThe fundamental relations to be kepy in mind are:\n\nIn Weak inversion, \\[\n\\frac{g_m}{I_D} = \\text{Constant}\n\\]\nIn Strong Inversion, \\[\ng_m = \\sqrt{2\\beta I_D} = \\frac{2I_D}{V_{ov}}\n\\]"
+  },
+  {
+    "objectID": "analog_pages.html#weak-inversion-theory",
+    "href": "analog_pages.html#weak-inversion-theory",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "3 Weak Inversion Theory",
+    "text": "3 Weak Inversion Theory\n\n3.1 Drain Current Expression\nIn weak inversion, the drain current can be approximated as\n\\[\nI_D = I_0 \\exp\\left(\\frac{V_{GS} - V_{TH}}{n U_T}\\right)\n\\]\nwhere \\(U_T = kT/q\\) is the thermal voltage and \\(n\\) is the subthreshold slope factor [2].\n\n\n3.2 Transconductance Efficiency\nThe transconductance-to-current ratio is\n\\[\n\\frac{g_m}{I_D} = \\frac{1}{n U_T}\n\\]\nwhich is maximized in weak inversion, making it attractive for low-power amplifiers [3]."
+  },
+  {
+    "objectID": "analog_pages.html#circuit-implications",
+    "href": "analog_pages.html#circuit-implications",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "4 Circuit Implications",
+    "text": "4 Circuit Implications\n\n4.1 Current Mirrors\nWeak inversion current mirrors provide excellent matching at low currents, though they are sensitive to temperature and process variation.\n\n\n4.2 Low-Voltage Biasing\nBecause \\(V_{GS}\\) is close to \\(V_{TH}\\), circuits can operate with supplies below 1 V [4]."
+  },
+  {
+    "objectID": "analog_pages.html#limitations",
+    "href": "analog_pages.html#limitations",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "5 Limitations",
+    "text": "5 Limitations\nDespite its advantages, weak inversion design suffers from: - reduced bandwidth - increased noise - strong temperature dependence\nThese trade-offs must be carefully evaluated."
+  },
+  {
+    "objectID": "analog_pages.html#conclusion",
+    "href": "analog_pages.html#conclusion",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "6 Conclusion",
+    "text": "6 Conclusion\nWeak inversion remains a powerful technique for ultra-low-power analog systems, particularly in biomedical and IoT applications. Proper modeling and careful biasing are essential for robust operation."
+  },
+  {
+    "objectID": "analog_pages.html#references",
+    "href": "analog_pages.html#references",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "9 References",
+    "text": "9 References"
+  },
+  {
+    "objectID": "analog_pages.html#abstract",
+    "href": "analog_pages.html#abstract",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "analog_pages.html#the-input-stage-of-op-amp-may-need-to-tolerate-rail-to-rail-swing-in-case-of-unity-feedback-configuration-under-a-common-mode-that-swings-rail-to-rail-subramanian_119-dba_2025.-in-this-tutorial-we-try-to-understand-simulate-and-explain-some-popular-choices-found-in-literature-survey-subramanian_119-dba_2025li_self-regulated_2020chen_multi-form_2025",
+    "href": "analog_pages.html#the-input-stage-of-op-amp-may-need-to-tolerate-rail-to-rail-swing-in-case-of-unity-feedback-configuration-under-a-common-mode-that-swings-rail-to-rail-subramanian_119-dba_2025.-in-this-tutorial-we-try-to-understand-simulate-and-explain-some-popular-choices-found-in-literature-survey-subramanian_119-dba_2025li_self-regulated_2020chen_multi-form_2025",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "2 The input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. In this tutorial, we try to understand, simulate and explain some popular choices found in literature survey [3]",
+    "text": "2 The input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. In this tutorial, we try to understand, simulate and explain some popular choices found in literature survey [3]"
+  },
+  {
+    "objectID": "analog_pages.html#methodology",
+    "href": "analog_pages.html#methodology",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "3 Methodology",
+    "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work"
+  },
+  {
+    "objectID": "analog_pages.html#we-have-studied-a-collection-of-literature-reviews-on-such-techniques-and-have-selected-few-canonical-or-exotic-topologies-for-simulation-in-proprietary-pdk-for-our-understanding.-we-have-also-replicated-our-learnings-on-open-source-skywater-130nm-pdk-simulated-on-colab.-all-the-colab-notebooks-are-accessible-on-our-github-and-are-simulatable-on-a-single-click.-we-look-forward-to-collaboration-and-feedback-on-future-extension-of-this-work",
+    "href": "analog_pages.html#we-have-studied-a-collection-of-literature-reviews-on-such-techniques-and-have-selected-few-canonical-or-exotic-topologies-for-simulation-in-proprietary-pdk-for-our-understanding.-we-have-also-replicated-our-learnings-on-open-source-skywater-130nm-pdk-simulated-on-colab.-all-the-colab-notebooks-are-accessible-on-our-github-and-are-simulatable-on-a-single-click.-we-look-forward-to-collaboration-and-feedback-on-future-extension-of-this-work",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "4 We have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work",
+    "text": "4 We have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work"
+  },
+  {
+    "objectID": "index.html#abstract",
+    "href": "index.html#abstract",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "2 Introduction",
+    "text": "2 Introduction\nThe input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. Usually, there is only a single input pair and the input is directly fed to the gates of this pair. Rail-to-Rail input swing in unity configuration requires one of the following choices:\n\nUse of complementary input pairs - a PMOS and an NMOS input pair\nShifting the common-mode of the input fed to a single input pair\n\n\n\n\nAn elephant\n\n\nThe first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. Once these two constraints are settled, various creative topologies can be employed competing against each other on following specs:\n\nCMRR\nTHD\nSlew Rate\nPower burnt\nUGB variation across input variation\n\nThe fundamental relations to be kepy in mind are:\n\nIn Weak inversion, \\[\n\\frac{g_m}{I_D} = \\text{Constant}\n\\]\nIn Strong Inversion, \\[\ng_m = \\sqrt{2\\beta I_D} = \\frac{2I_D}{V_{ov}}\n\\]"
+  },
+  {
+    "objectID": "index.html#methodology",
+    "href": "index.html#methodology",
+    "title": "Rail-to-Rail Input Amplifiers",
+    "section": "3 Methodology",
+    "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work.\nAI was used to generate qualitative plots in this work."
+  }
+]
