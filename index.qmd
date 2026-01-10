@@ -1,14 +1,11 @@
 ---
-title: "Rail-to-Rail Input Amplifiers"
+title: "Rail-to-Rail Input Amplifier"
 sidebar: analog
 
 author:
-  - name: "Tejas Ketkar"
-    affiliation: "Indian Institute of Technology, Kanpur (2018-23)"
   - name: "Shlok Vaibhav"
-    affiliation: "Indian Institute of Technology, Bombay (2018-23)"
+    Affiliation: "Indian Institute of Technology, Bombay (2018-23)"
 
-date: 2026-01-05
 format:
   html:
     toc: true
@@ -32,7 +29,7 @@ The input stage of op-amp may need to tolerate rail-to-rail swing in case of uni
 1. Use of complementary input pairs - a PMOS and an NMOS input pair 
 2. Shifting the common-mode of the input fed to a single input pair
 
-![An elephant](quadrant.png){.lightbox}
+![Various choices possible](quadrant.png){.lightbox}
 
 The first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. 
 Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. 

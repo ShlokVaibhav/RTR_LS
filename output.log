@@ -2,87 +2,17 @@
 Note: No compatibility mode selected!
 
 
-Circuit: ** sch_path: /home/shlok/.xschem/xschem_library/xschem_sky130/sky130_tests/test_ac.sch
+Circuit: ** sch_path: /home/shlok/.xschem/xschem_library/xschem_sky130/sky130_tests/res_amp_working.sch
 
 Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
 
 Using SPARSE 1.3 as Direct Linear Solver
-Note: Starting dynamic gmin stepping
-Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 21
+ASCII raw file "res_amp_working.raw"
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
 
 No. of Data Rows : 1
-ASCII raw file "test_ac.raw"
-Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
-
-Using SPARSE 1.3 as Direct Linear Solver
-Note: Starting dynamic gmin stepping
-Note: Dynamic gmin stepping completed
-
-No. of Data Rows : 121
-ASCII raw file "test_ac.raw"
-Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
-
-Using SPARSE 1.3 as Direct Linear Solver
-Note: Starting dynamic gmin stepping
-Note: Dynamic gmin stepping completed
-
-Initial Transient Solution
---------------------------
-
-Node                                   Voltage
-----                                   -------
-g                                     0.895187
-plus                                      0.91
-s                                     0.281035
-out                                   0.909866
-minus                                 0.909866
-net7                                  0.281035
-bias                                  0.605171
-vcc                                        1.8
-in                                           0
-net1                                  0.281035
-net2                                  0.909866
-net3                                  0.605171
-nbias                                 0.557614
-net4                                  0.557614
-vcc_1v0                                      1
-pbias                                  0.41552
-net5                                  0.770507
-pbias_cmfb_amp                        0.562723
-inp_shift                             0.291099
-inm_shift                             0.290541
-pbias_dio                             0.461259
-vref                                       0.3
-inm                                        0.4
-nbias_cmfb_amp                         0.42727
-inp                                   0.400584
-xr1.xsky130_fd_pr__res_xhigh_po_0p35.ra        0.291845
-xr2.xsky130_fd_pr__res_xhigh_po_0p35.ra        0.291286
-net6                                  0.854023
-pbias_dio_amp                         0.396631
-l1#branch                                    0
-e2#branch                         -4.71393e-06
-e1#branch                          4.71392e-06
-v_inm#branch                       8.00587e-08
-v5#branch                                    0
-v1#branch                         -8.22228e-05
-vtail2#branch                            1e-05
-vtail1#branch                            1e-05
-v4#branch                                    0
-v3#branch                                    0
-v2#branch                         -1.94292e-05
-vtail#branch                       9.42916e-06
-
-
-No. of Data Rows : 1011
-ASCII raw file "test_ac.raw"
-Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
-
-Using SPARSE 1.3 as Direct Linear Solver
-Note: Starting dynamic gmin stepping
-Note: Dynamic gmin stepping completed
-
-No. of Data Rows : 5
-ASCII raw file "dc_ac.dat"
-ASCII raw file "test_ac_dc.raw"
-Note: Simulation executed from .control section 
+ngspice-45.2 done

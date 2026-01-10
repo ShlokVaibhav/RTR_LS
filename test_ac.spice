@@ -101,12 +101,11 @@ XM32 PBIAS_DIO_AMP PBIAS_DIO_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1
   ac dec 10 1 1e12
   remzerovec
   write test_ac.raw
-  tran 0.1n 100n
-  write test_ac.raw
+  *tran 0.1n 100n
+  *write test_ac.raw
   save all
-  save v(INM_SHIFT)
-  dc V_INM 0.6 1 0.1
-  write dc_ac.dat
+  dc V_INM 0 1 0.1
+  wrdata INP.dat v(inp) v(inm)
   write test_ac_dc.raw
 .endc
 

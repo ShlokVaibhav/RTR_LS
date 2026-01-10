@@ -1,0 +1,101 @@
+** sch_path: /home/shlok/.xschem/xschem_library/xschem_sky130/sky130_tests/res_amp_working.sch
+**.subckt res_amp_working
+V2 VCC 0 1.8
+V3 PLUS 0 0.91
+V4 IN 0 0 ac 1 0 sin(0 1m 100meg 0 0 0)
+V1 VCC_1V0 0 1
+V5 VREF 0 0.3
+XM35 net1 PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=8 m=8
+XMP_INM INP INP_SHIFT net1 net1 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XMP_INP PBIAS_DIO_AMP INM_SHIFT net1 net1 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM38 PBIAS_DIO_AMP NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+XM39 INP NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=4 m=4
+XM40 INP PBIAS_DIO_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM41 PBIAS_DIO_AMP PBIAS_DIO_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58
++ nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM17 NBIAS NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=2 m=2
+Vtail2 net2 NBIAS 0
+.save i(vtail2)
+I1 VCC_1V0 net2 10u
+XM18 PBIAS NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=2 m=2
+XM19 PBIAS PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM20 net3 PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM21 PBIAS_CMFB_AMP INP_SHIFT net3 net3 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM22 PBIAS_CMFB_AMP INM_SHIFT net3 net3 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM23 PBIAS_DIO VREF net3 net3 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+XM24 PBIAS_DIO VREF net3 net3 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+XM25 PBIAS_DIO NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=2 m=2
+XM26 PBIAS_DIO PBIAS_DIO VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM27 PBIAS_CMFB_AMP NBIAS 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=2 m=2
+XM28 PBIAS_CMFB_AMP PBIAS_DIO VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM29 NBIAS_CMFB_AMP PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58
++ nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM30 NBIAS_CMFB_AMP NBIAS_CMFB_AMP 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM31 INP PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM32 INP_SHIFT NBIAS_CMFB_AMP 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM33 INM PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM34 INM_SHIFT NBIAS_CMFB_AMP 0 0 sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+R4 INP INP_SHIFT 60k m=1
+R5 INM INM_SHIFT 60k m=1
+**** begin user architecture code
+
+* this option enables mos model bin
+* selection based on W/NF instead of W
+.option wnflag=1
+.option savecurrents
+vg G1v8 0 1.8
+vs s 0 0
+vd D1v8 0 1.8
+vb b 0 0
+v_inm INM 0 0.5
+.control
+set noappendwrite
+save all
+dc v_inm 0 1 0.05
+
+*save v(INP)
+*save v(INP_SHIFT)
+*save v(INM_SHIFT)
+
+*save @m.xm27.msky130_fd_pr__nfet_01v8_lvt[gm]
+*save @m.xmp_inp.msky130_fd_pr__pfet_01v8_lvt[gm]
+*save all
+wrdata res_dc_ana v(inm) v(inp) v(vref) v(inp_shift) v(inm_shift)
+write res_amp_working.raw
+
+*wrdata GM @m.xm27.msky130_fd_pr__nfet_01v8_lvt[gm]
+
+save all
+op
+
+quit 0
+.endc
+
+
+.lib SkyWater130nm_subset/sky130A_ngspice/libs.tech/ngspice/sky130.lib.spice tt
+**** end user architecture code
+**.ends
+.end
