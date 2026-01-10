@@ -7,25 +7,64 @@
     "text": "Analog Tutorial"
   },
   {
-    "objectID": "RTR/Sub-1V-Dynamic-LS.html",
-    "href": "RTR/Sub-1V-Dynamic-LS.html",
+    "objectID": "RTR/Zener.html",
+    "href": "RTR/Zener.html",
     "title": "Rail-to-Rail Input Amplifiers",
     "section": "",
-    "text": "The input common mode is clamped at a certain threshold for sub 1V design"
+    "text": "An electronic zener is used",
+    "crumbs": [
+      "Strong Inversion",
+      "Electronic Zener"
+    ]
   },
   {
-    "objectID": "RTR/Crude4xMirror.html",
-    "href": "RTR/Crude4xMirror.html",
-    "title": "Rail-to-Rail Input Amplifiers",
+    "objectID": "RTR/Min_Max_Selector.html",
+    "href": "RTR/Min_Max_Selector.html",
+    "title": "Min Max Selector",
     "section": "",
-    "text": "Crude 4x Current mirror, gives 40% gm variation"
+    "text": "Selects the stronger of the two input pairs to maintain constant gm"
   },
   {
-    "objectID": "Blog.html",
-    "href": "Blog.html",
-    "title": "HomePage",
+    "objectID": "Res_amp.html",
+    "href": "Res_amp.html",
+    "title": "1V Rail-to-Rail Amp with CMFB",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Introduction\nIn this colab, a 1V Rail-to-Rail input stage is simulated using NGSpice\nThe reference paper can be accessed at 1-V rail-to-rail operational amplifiers in standard CMOS technology\nThis notebook, the xschem schematic and the spice netlist can be accessed here\nIn next 3 cells, we are just installing the required modules and skywater files\n\n\nNote\n(I have followed Stefano Schippers’ tutorial (https://xschem.sourceforge.io/stefan/xschem_man/video_tutorials/install_xschem_sky130_and_ngspice.mp4) to install and build the skywater files and then uploaded the minimal 100mb subset here. I strongly recommend that you run Stefano’s setup at your end to build files from original skywater repo as the files that I am uploading have been moved across many OS multiple times and might get inadvertently corrupted. If there is a better way to communicate the above information to emphasize this github repo is not my original work as well as the risks involved, do let me know!)\n\n\nCode\n%%capture\n! python --version  # Pyspice works with python  3.9 or lower\n!pip install -q gdown\n!git clone https://github.com/ShlokVaibhav/SkyWater130nm_subset.git\n\n\n\n\nCode\n%%capture\n!pip install matplotlib\n!pip install numpy\n!pip install scipy\n\n\n\n\nCode\n%%capture\nimport sys\nimport subprocess\nimport platform\n\ndef install_ngspice():\n    system = platform.system()\n    if system == \"Linux\":\n        # Google Colab\n        subprocess.run([\"apt-get\", \"update\"], check=True)\n        subprocess.run([\"apt-get\", \"-y\", \"install\", \"ngspice\"], check=True)\n\n    elif system == \"Windows\":\n        # Conda-based Windows\n        subprocess.run(\n            [\"conda\", \"install\", \"-y\", \"-c\", \"conda-forge\", \"ngspice\"],\n            shell=True\n        )\n    else:\n        raise RuntimeError(\"Unsupported OS\")\n\ninstall_ngspice()\n\n\n\n\nSchematic and Results\nThe schematic to be simulated:(Generated using Xschem and skywater130) The scheme is straightforward, we use a negative feedback on the input common-mode voltage to generate two level-shifted inputs that are clamped to a VREF=300mV, this is then passed to the input pair of actual amp. \n\n\nCode\nsubprocess.call(\"ngspice -b -o output.log res_amp_working.spice\", shell=True)\n\n\n0\n\n\nThe key nodes- The applied input, the output and the level shifted inputs and outputs compared with the reference are plotted. The Shifted inputs do get clamped to VREF=300mV while the actual input and output swing almost rail-to-rail. The clamping is underwhelming as I am still in process of characterizing skywater130 devices and this is a bare-minimum design\n\n\nCode\n#The key node voltages can be added\nimport numpy as np\nimport matplotlib.pyplot as plt\ncolumns = [\"VIN\", \"VOUT\", \"VREF\", \"VIN_SHIFTED\", \"VOUT_SHIFTED\"]\nfile_name = \"res_dc_ana\"\n\ndef Gen_sweep_plot(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN, label=\"VIN\")\n  plt.plot(VIN, VOUT, label=\"VOUT\")\n  plt.plot(VIN, VIN_SHIFTED, label=\"VIN_SHIFTED\")\n  plt.plot(VIN, VREF, label=\"VREF\")\n  plt.plot(VIN, VOUT_SHIFTED, label=\"VOUT_SHIFTED\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"VOUT\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nGen_sweep_plot(columns, file_name)\n\n\n\n\n\n\n\n\n\nThe input error is plotted now: (It is not flat in the middle because the skywater transistors have not yet been characterized)\n\n\nCode\ndef Plot_input_error(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN-VOUT, label=\"Input Error\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"Input Error\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nPlot_input_error(columns, file_name)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Rail-to-Rail Input Amplifier",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "index.html#abstract",
+    "href": "index.html#abstract",
+    "title": "Rail-to-Rail Input Amplifier",
+    "section": "",
+    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Rail-to-Rail Input Amplifier",
+    "section": "2 Introduction",
+    "text": "2 Introduction\nThe input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. Usually, there is only a single input pair and the input is directly fed to the gates of this pair. Rail-to-Rail input swing in unity configuration requires one of the following choices:\n\nUse of complementary input pairs - a PMOS and an NMOS input pair\nShifting the common-mode of the input fed to a single input pair\n\n\n\n\nVarious choices possible\n\n\nThe first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. Once these two constraints are settled, various creative topologies can be employed competing against each other on following specs:\n\nCMRR\nTHD\nSlew Rate\nPower burnt\nUGB variation across input variation\n\nThe fundamental relations to be kepy in mind are:\n\nIn Weak inversion, \\[\n\\frac{g_m}{I_D} = \\text{Constant}\n\\]\nIn Strong Inversion, \\[\ng_m = \\sqrt{2\\beta I_D} = \\frac{2I_D}{V_{ov}}\n\\]"
+  },
+  {
+    "objectID": "index.html#methodology",
+    "href": "index.html#methodology",
+    "title": "Rail-to-Rail Input Amplifier",
+    "section": "3 Methodology",
+    "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work.\nAI was used to generate qualitative plots in this work."
+  },
+  {
+    "objectID": "Analog_Specs.html",
+    "href": "Analog_Specs.html",
+    "title": "Analog Specs on colab",
+    "section": "",
+    "text": "In this file, a 2 stage op-amp is simulated online using NGSpice\nIn next 3 cells, we are just installing the required modules and files\n\n\nCode\n%%capture\n! python --version  # Pyspice works with python  3.9 or lower\n!pip install -q gdown\n\n\n\n\nCode\n%%capture\n!gdown --id 1NJs6nJIQN3fsmf7IJ9yrPfo0g2SwTpeC -O params.inc;\n!gdown --id 1tKXE0thOO_R2apoPKUVW6FFMPkYw9qIp -O schematic.spice;\n\n\n\n\nCode\n%%capture\n!pip install matplotlib\n!pip install numpy\n!pip install scipy\n\n\n\n\nCode\n%%capture\nimport sys\nimport subprocess\nimport platform\n\ndef install_ngspice():\n    system = platform.system()\n    if system == \"Linux\":\n        # Google Colab\n        subprocess.run([\"apt-get\", \"update\"], check=True)\n        subprocess.run([\"apt-get\", \"-y\", \"install\", \"ngspice\"], check=True)\n\n    elif system == \"Windows\":\n        # Conda-based Windows\n        subprocess.run(\n            [\"conda\", \"install\", \"-y\", \"-c\", \"conda-forge\", \"ngspice\"],\n            shell=True\n        )\n    else:\n        raise RuntimeError(\"Unsupported OS\")\n\ninstall_ngspice()\n\n\n\n\nThe schematic to be simulated is\n\n\n\nimage.png\n\n\n\n\nThe testbench now being simulated is :\n\n\n\nimage.png\n\n\n\n\nCode\n%%capture\nsubprocess.call(\"ngspice -b -o output.log schematic.spice\", shell=True)\n\n\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n# Analog specs\ndef Power():  # returns the power in mW\n    with open(\"power.dat\", \"r\") as f:\n      power = 1000*float(f.read().split(' ')[-2])\n    f.close()\n    return power\n\ndef out_swing():  # returns the output swing\n    with open(\"margin.dat\", \"r\") as f:\n      out_swing = float(f.read().split(' ')[-2])\n    f.close()\n    return out_swing\n\ndef PSRR():\n    PSRR_data = np.loadtxt(\"PSRR.dat\")\n    ADC, _,_ = DC_gain()\n    return -PSRR_data[0, 1] + ADC\n\ndef CMRR():\n    CMRR_data = np.loadtxt(\"CMRR.dat\")\n    ADC,_,_ = DC_gain()\n    return -CMRR_data[0, 1] + ADC\n\ndef DC_gain(show=0):\n    AC_data = np.loadtxt(\"AC.dat\")\n    freq  = AC_data[:, 0]\n    gain  = AC_data[:, 1]\n    phase = AC_data[:, 3]*180/np.pi - 180\n    sign_change_idx = np.where(np.diff(np.sign(gain)) != 0)[0]\n\n    i = sign_change_idx[0]  # first crossover\n\n    # Step 2: Linear interpolation for accurate crossover frequency\n    f1, f2 = freq[i], freq[i+1]\n    g1, g2 = gain[i], gain[i+1]\n\n    # frequency where gain = 0 dB\n    f_gc = f1 + (0 - g1) * (f2 - f1) / (g2 - g1)\n\n    # Step 3: interpolate phase at gain crossover\n    p1, p2 = phase[i], phase[i+1]\n    phase_gc = p1 + (0 - g1) * (p2 - p1) / (g2 - g1)+180\n\n    if show==1:\n      fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(8, 6))\n\n      # Magnitude plot\n      ax1.semilogx(freq, gain)\n      ax1.set_ylabel(\"Gain (dB)\")\n      ax1.grid(True, which=\"both\")\n      ax1.set_title(\"Bode Plot\")\n      ax1.set_ylim(bottom=-20)\n\n      # Phase plot\n      ax2.semilogx(freq, phase)\n      ax2.set_xlabel(\"Frequency (Hz)\")\n      ax2.set_ylabel(\"Phase (°)\")\n      ax2.grid(True, which=\"both\")\n\n      plt.show()\n      return\n    return gain[0], f_gc/1e6, phase_gc\n\n\nprint(\"Power: \" + str(Power())+\"mW\")\nprint(\"Output swing (VCC=5V): \" + str(out_swing())+\"V\")\nprint(\"DC PSRR is: \" + str(PSRR())+\"dB\")\nprint(\"DC CMRR is: \" + str(CMRR())+\"dB\")\n[Adc, UGB, PM] = DC_gain(0)\nprint(\"DC Gain is: \" + str(Adc)+\"dB\")\nprint(\"UGB is: \" + f\"{UGB:.4g}\"+\"MHz\")\nprint(\"PM is: \" +  f\"{PM:.4g}\"+\"°\")\nDC_gain(1)\n\n\nPower: 0.236781084mW\nOutput swing (VCC=5V): 4.52387492V\nDC PSRR is: 170.62977039999998dB\nDC CMRR is: 139.9081498dB\nDC Gain is: 89.3113565dB\nUGB is: 14.08MHz\nPM is: -13.15°\n\n\n\n\n\n\n\n\n\n\n\nCode\n#The rise fall time specs can be used to find the slew rate\n# returns fall time in ns\ndef Fall_Time(W):\n  data = np.loadtxt('Aus.dat')  # your .dat file\n  #data = np.loadtxt('I_SUP.dat')  # your .dat file\n\n  # If your file has two columns\n  t = data[:, 0]   # first column\n  V = data[:, 1]  # second column\n\n  v_min = V.min()\n  v_max = V.max()\n  v10 = v_min + 0.1*(v_max - v_min)\n  v90 = v_min + 0.9*(v_max - v_min)\n  tf10 = t[np.where(V &lt;= v10)[0][0]]  # first time V crosses 10%\n  tf90 = t[np.where(V &lt;= v90)[0][0]]  # first time V crosses 90%\n  tf = (tf10 - tf90)*1e9\n  return tf\n\n\n# returns rise time in ns\ndef Rise_Time(W):\n  data = np.loadtxt('Aus.dat')  # your .dat file\n  #data = np.loadtxt('I_SUP.dat')  # your .dat file\n\n  # If your file has two columns\n  t = data[:, 0]   # first column\n  V = data[:, 1]  # second column\n\n  v_min = V.min()\n  v_max = V.max()\n  v10 = v_min + 0.1*(v_max - v_min)\n  v90 = v_min + 0.9*(v_max - v_min)\n  tr10 = t[np.where((V &gt;= v10) & (t &gt; 3e-9))[0][0]]\n  tr90 = t[np.where((V &gt;= v90) & (t &gt; 3e-9))[0][0]]\n  tr = (tr90 - tr10)*1e9\n  return tr"
   },
   {
     "objectID": "about.html",
@@ -63,49 +102,38 @@
     "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
+    "objectID": "Blog.html",
+    "href": "Blog.html",
+    "title": "HomePage",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "Res_amp/Res_amp.html",
+    "href": "Res_amp/Res_amp.html",
+    "title": "1V Rail-to-Rail Amp with CMFB",
+    "section": "",
+    "text": "Introduction\nIn this colab, a 1V Rail-to-Rail input stage is simulated using NGSpice The reference paper can be accessed at 1-V rail-to-rail operational amplifiers in standard CMOS technology In next 3 cells, we are just installing the required modules and skywater files (I have followed Stefano Schippers’ tutorial (https://xschem.sourceforge.io/stefan/xschem_man/video_tutorials/install_xschem_sky130_and_ngspice.mp4) to install and build the skywater files and then uploaded the minimal 100mb subset here. I strongly recommend that you run Stefano’s setup at your end to build files from original skywater repo as the files that I am uploading have been moved across many OS multiple times and might get inadvertently corrupted. If there is a better way to communicate the above information to emphasize this github repo is not my original work as well as the risks involved, do let me know!)\n\n\nCode\n%%capture\n! python --version  # Pyspice works with python  3.9 or lower\n!pip install -q gdown\n!git clone https://github.com/ShlokVaibhav/SkyWater130nm_subset.git\n\n\n\n\nCode\n%%capture\n!pip install matplotlib\n!pip install numpy\n!pip install scipy\n\n\n\n\nCode\n%%capture\nimport sys\nimport subprocess\nimport platform\n\ndef install_ngspice():\n    system = platform.system()\n    if system == \"Linux\":\n        # Google Colab\n        subprocess.run([\"apt-get\", \"update\"], check=True)\n        subprocess.run([\"apt-get\", \"-y\", \"install\", \"ngspice\"], check=True)\n\n    elif system == \"Windows\":\n        # Conda-based Windows\n        subprocess.run(\n            [\"conda\", \"install\", \"-y\", \"-c\", \"conda-forge\", \"ngspice\"],\n            shell=True\n        )\n    else:\n        raise RuntimeError(\"Unsupported OS\")\n\ninstall_ngspice()\n\n\n\n\nSchematic and Results\nThe schematic to be simulated:(Generated using Xschem and skywater130) The scheme is straightforward, we use a negative feedback on the input common-mode voltage to generate two level-shifted inputs that are clamped to a VREF=300mV, this is then passed to the input pair of actual amp. \n\n\nCode\nsubprocess.call(\"ngspice -b -o output.log res_amp_working.spice\", shell=True)\n\n\n0\n\n\nThe key nodes- The applied input, the output and the level shifted inputs and outputs compared with the reference are plotted. The Shifted inputs do get clamped to VREF=300mV while the actual input and output swing almost rail-to-rail. The clamping is underwhelming as I am still in process of characterizing skywater130 devices and this is a bare-minimum design\n\n\nCode\n#The key node voltages can be added\nimport numpy as np\nimport matplotlib.pyplot as plt\ncolumns = [\"VIN\", \"VOUT\", \"VREF\", \"VIN_SHIFTED\", \"VOUT_SHIFTED\"]\nfile_name = \"res_dc_ana\"\n\ndef Gen_sweep_plot(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN, label=\"VIN\")\n  plt.plot(VIN, VOUT, label=\"VOUT\")\n  plt.plot(VIN, VIN_SHIFTED, label=\"VIN_SHIFTED\")\n  plt.plot(VIN, VREF, label=\"VREF\")\n  plt.plot(VIN, VOUT_SHIFTED, label=\"VOUT_SHIFTED\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"VOUT\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nGen_sweep_plot(columns, file_name)\n\n\n\n\n\n\n\n\n\nThe input error is plotted now: (It is not flat in the middle because the skywater transistors have not yet been characterized)\n\n\nCode\ndef Plot_input_error(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN-VOUT, label=\"Input Error\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"Input Error\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nPlot_input_error(columns, file_name)"
+  },
+  {
+    "objectID": "RTR/Crude4xMirror.html",
+    "href": "RTR/Crude4xMirror.html",
     "title": "Rail-to-Rail Input Amplifiers",
     "section": "",
-    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+    "text": "Crude 4x Current mirror, gives 40% gm variation"
   },
   {
-    "objectID": "index.html#abstract",
-    "href": "index.html#abstract",
+    "objectID": "RTR/Sub-1V-Dynamic-LS.html",
+    "href": "RTR/Sub-1V-Dynamic-LS.html",
     "title": "Rail-to-Rail Input Amplifiers",
     "section": "",
-    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
+    "text": "The input common mode is clamped at a certain threshold for sub 1V design"
   },
   {
-    "objectID": "index.html#introduction",
-    "href": "index.html#introduction",
-    "title": "Rail-to-Rail Input Amplifiers",
-    "section": "2 Introduction",
-    "text": "2 Introduction\nThe input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. Usually, there is only a single input pair and the input is directly fed to the gates of this pair. Rail-to-Rail input swing in unity configuration requires one of the following choices:\n\nUse of complementary input pairs - a PMOS and an NMOS input pair\nShifting the common-mode of the input fed to a single input pair\n\n\n\n\nAn elephant\n\n\nThe first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. Once these two constraints are settled, various creative topologies can be employed competing against each other on following specs:\n\nCMRR\nTHD\nSlew Rate\nPower burnt\nUGB variation across input variation\n\nThe fundamental relations to be kepy in mind are:\n\nIn Weak inversion, \\[\n\\frac{g_m}{I_D} = \\text{Constant}\n\\]\nIn Strong Inversion, \\[\ng_m = \\sqrt{2\\beta I_D} = \\frac{2I_D}{V_{ov}}\n\\]"
-  },
-  {
-    "objectID": "index.html#methodology",
-    "href": "index.html#methodology",
-    "title": "Rail-to-Rail Input Amplifiers",
-    "section": "3 Methodology",
-    "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work.\nAI was used to generate qualitative plots in this work."
-  },
-  {
-    "objectID": "RTR/Min_Max_Selector.html",
-    "href": "RTR/Min_Max_Selector.html",
-    "title": "Min Max Selector",
+    "objectID": "RTR.html",
+    "href": "RTR.html",
+    "title": "Analog Specs on colab",
     "section": "",
-    "text": "Selects the stronger of the two input pairs to maintain constant gm"
-  },
-  {
-    "objectID": "RTR/Zener.html",
-    "href": "RTR/Zener.html",
-    "title": "Rail-to-Rail Input Amplifiers",
-    "section": "",
-    "text": "An electronic zener is used",
-    "crumbs": [
-      "Strong Inversion",
-      "Electronic Zener"
-    ]
+    "text": "In this file, a 2 stage op-amp is simulated online using NGSpice\nIn next 3 cells, we are just installing the required modules and files\n\n\nCode\n%%capture\n! python --version  # Pyspice works with python  3.9 or lower\n!pip install -q gdown\n\n\n\n\nCode\n%%capture\n!gdown --id 1NJs6nJIQN3fsmf7IJ9yrPfo0g2SwTpeC -O params.inc;\n!gdown --id 1tKXE0thOO_R2apoPKUVW6FFMPkYw9qIp -O schematic.spice;\n\n\n\n\nCode\n%%capture\n!pip install matplotlib\n!pip install numpy\n!pip install scipy\n\n\n\n\nCode\n%%capture\nimport sys\nimport subprocess\nimport platform\n\ndef install_ngspice():\n    system = platform.system()\n    if system == \"Linux\":\n        # Google Colab\n        subprocess.run([\"apt-get\", \"update\"], check=True)\n        subprocess.run([\"apt-get\", \"-y\", \"install\", \"ngspice\"], check=True)\n\n    elif system == \"Windows\":\n        # Conda-based Windows\n        subprocess.run(\n            [\"conda\", \"install\", \"-y\", \"-c\", \"conda-forge\", \"ngspice\"],\n            shell=True\n        )\n    else:\n        raise RuntimeError(\"Unsupported OS\")\n\ninstall_ngspice()\n\n\n\n\nThe schematic to be simulated is\n\n\n\nimage.png\n\n\n\n\nThe testbench now being simulated is :\n\n\n\nimage.png\n\n\n\n\nCode\n%%capture\nsubprocess.call(\"ngspice -b -o output.log test_ac.spice\", shell=True)\n\n\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n# Analog specs\ndef Power():  # returns the power in mW\n    with open(\"power.dat\", \"r\") as f:\n      power = 1000*float(f.read().split(' ')[-2])\n    f.close()\n    return power\n\ndef out_swing():  # returns the output swing\n    with open(\"margin.dat\", \"r\") as f:\n      out_swing = float(f.read().split(' ')[-2])\n    f.close()\n    return out_swing\n\ndef PSRR():\n    PSRR_data = np.loadtxt(\"PSRR.dat\")\n    ADC, _,_ = DC_gain()\n    return -PSRR_data[0, 1] + ADC\n\ndef CMRR():\n    CMRR_data = np.loadtxt(\"CMRR.dat\")\n    ADC,_,_ = DC_gain()\n    return -CMRR_data[0, 1] + ADC\n\ndef DC_gain(show=0):\n    AC_data = np.loadtxt(\"AC.dat\")\n    freq  = AC_data[:, 0]\n    gain  = AC_data[:, 1]\n    phase = AC_data[:, 3]*180/np.pi - 180\n    sign_change_idx = np.where(np.diff(np.sign(gain)) != 0)[0]\n\n    i = sign_change_idx[0]  # first crossover\n\n    # Step 2: Linear interpolation for accurate crossover frequency\n    f1, f2 = freq[i], freq[i+1]\n    g1, g2 = gain[i], gain[i+1]\n\n    # frequency where gain = 0 dB\n    f_gc = f1 + (0 - g1) * (f2 - f1) / (g2 - g1)\n\n    # Step 3: interpolate phase at gain crossover\n    p1, p2 = phase[i], phase[i+1]\n    phase_gc = p1 + (0 - g1) * (p2 - p1) / (g2 - g1)+180\n\n    if show==1:\n      fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True, figsize=(8, 6))\n\n      # Magnitude plot\n      ax1.semilogx(freq, gain)\n      ax1.set_ylabel(\"Gain (dB)\")\n      ax1.grid(True, which=\"both\")\n      ax1.set_title(\"Bode Plot\")\n      ax1.set_ylim(bottom=-20)\n\n      # Phase plot\n      ax2.semilogx(freq, phase)\n      ax2.set_xlabel(\"Frequency (Hz)\")\n      ax2.set_ylabel(\"Phase (°)\")\n      ax2.grid(True, which=\"both\")\n\n      plt.show()\n      return\n    return gain[0], f_gc/1e6, phase_gc\n\n\nprint(\"Power: \" + str(Power())+\"mW\")\nprint(\"Output swing (VCC=5V): \" + str(out_swing())+\"V\")\nprint(\"DC PSRR is: \" + str(PSRR())+\"dB\")\nprint(\"DC CMRR is: \" + str(CMRR())+\"dB\")\n[Adc, UGB, PM] = DC_gain(0)\nprint(\"DC Gain is: \" + str(Adc)+\"dB\")\nprint(\"UGB is: \" + f\"{UGB:.4g}\"+\"MHz\")\nprint(\"PM is: \" +  f\"{PM:.4g}\"+\"°\")\nDC_gain(1)\n\n\nPower: 0.236781084mW\nOutput swing (VCC=5V): 4.52387492V\nDC PSRR is: 170.62977039999998dB\nDC CMRR is: 139.9081498dB\nDC Gain is: 89.3113565dB\nUGB is: 14.08MHz\nPM is: -13.15°\n\n\n\n\n\n\n\n\n\n\n\nCode\n#The rise fall time specs can be used to find the slew rate\n# returns fall time in ns\ndef Fall_Time(W):\n  data = np.loadtxt('Aus.dat')  # your .dat file\n  #data = np.loadtxt('I_SUP.dat')  # your .dat file\n\n  # If your file has two columns\n  t = data[:, 0]   # first column\n  V = data[:, 1]  # second column\n\n  v_min = V.min()\n  v_max = V.max()\n  v10 = v_min + 0.1*(v_max - v_min)\n  v90 = v_min + 0.9*(v_max - v_min)\n  tf10 = t[np.where(V &lt;= v10)[0][0]]  # first time V crosses 10%\n  tf90 = t[np.where(V &lt;= v90)[0][0]]  # first time V crosses 90%\n  tf = (tf10 - tf90)*1e9\n  return tf\n\n\n# returns rise time in ns\ndef Rise_Time(W):\n  data = np.loadtxt('Aus.dat')  # your .dat file\n  #data = np.loadtxt('I_SUP.dat')  # your .dat file\n\n  # If your file has two columns\n  t = data[:, 0]   # first column\n  V = data[:, 1]  # second column\n\n  v_min = V.min()\n  v_max = V.max()\n  v10 = v_min + 0.1*(v_max - v_min)\n  v90 = v_min + 0.9*(v_max - v_min)\n  tr10 = t[np.where((V &gt;= v10) & (t &gt; 3e-9))[0][0]]\n  tr90 = t[np.where((V &gt;= v90) & (t &gt; 3e-9))[0][0]]\n  tr = (tr90 - tr10)*1e9\n  return tr"
   }
 ]
