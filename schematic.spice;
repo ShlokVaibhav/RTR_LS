@@ -1,0 +1,153 @@
+** sch_path: /home/shlok/xschem_schematics/DC_TB.sch
+**.subckt DC_TB
+VVCC VCC 0 'VCC'
+VMINUS VIN_AMP 0 2.5 pulse 2 3 1u 1n 1n 4u 8u
+X_AMP net1 0 AMP_OUT_AC ACP VIN_AMP VCC AMP_2STG
+I0 VCC net1 'IB'
+VMINUS2 ACP ACM 0 ac 1 0
+X_AMP1 net2 0 AMP_OUT_DC AMP_OUT_DC VIN_AMP VCC AMP_2STG
+I1 VCC net2 'IB'
+E1 ACM 0 AMP_OUT_DC 0 1
+X_AMP2 net4 0 AMP_OUT_PSRR AMP_OUT_PSRR VIN_AMP net3 AMP_2STG
+I2 VCC net4 'IB'
+E3 net3 VCC ACP ACM 3
+X_AMP3 net6 0 AMP_OUT_CMRR net5 net5 VCC AMP_2STG
+I3 VCC net6 'IB'
+VMINUS1 net5 VIN_AMP 0 ac 1 0
+C1 AMP_OUT_DC 0 'CL' m=1
+C2 AMP_OUT_AC 0 'CL' m=1
+C3 AMP_OUT_CMRR 0 'CL' m=1
+C4 AMP_OUT_PSRR 0 'CL' m=1
+**** begin user architecture code
+
+
+** From the ngspice distribution:
+** https://sourceforge.net/p/ngspice/ngspice/ci/master/tree/examples/mos/modelcard.nmos
+** https://sourceforge.net/p/ngspice/ngspice/ci/master/tree/examples/mos/modelcard.pmos
+
+.model cmosn NMOS
++Level=        49 version=3.3.0
++Tnom=27.0
++Nch= 2.498E+17  Tox=9E-09 Xj=1.00000E-07
++Lint=9.36e-8 Wint=1.47e-7
++Vth0= .6322    K1= .756  K2= -3.83e-2  K3= -2.612
++Dvt0= 2.812  Dvt1= 0.462  Dvt2=-9.17e-2
++Nlx= 3.52291E-08  W0= 1.163e-6
++K3b= 2.233
++Vsat= 86301.58  Ua= 6.47e-9  Ub= 4.23e-18  Uc=-4.706281E-11
++Rdsw= 650  U0= 388.3203 wr=1
++A0= .3496967 Ags=.1    B0=0.546    B1= 1
++Dwg = -6.0E-09 Dwb = -3.56E-09 Prwb = -.213
++Keta=-3.605872E-02  A1= 2.778747E-02  A2= .9
++Voff=-6.735529E-02  NFactor= 1.139926  Cit= 1.622527E-04
++Cdsc=-2.147181E-05
++Cdscb= 0  Dvt0w =  0 Dvt1w =  0 Dvt2w =  0
++Cdscd =  0 Prwg =  0
++Eta0= 1.0281729E-02  Etab=-5.042203E-03
++Dsub= .31871233
++Pclm= 1.114846  Pdiblc1= 2.45357E-03  Pdiblc2= 6.406289E-03
++Drout= .31871233  Pscbe1= 5000000  Pscbe2= 5E-09 Pdiblcb = -.234
++Pvag= 0 delta=0.01
++Wl =  0 Ww = -1.420242E-09 Wwl =  0
++Wln =  0 Wwn =  .2613948 Ll =  1.300902E-10
++Lw =  0 Lwl =  0 Lln =  .316394
++Lwn =  0
++kt1=-.3  kt2=-.051
++At= 22400
++Ute=-1.48
++Ua1= 3.31E-10  Ub1= 2.61E-19 Uc1= -3.42e-10
++Kt1l=0 Prt=764.3
++vgs_max=4 vds_max=4 vbs_max=4
+
+.model cmosp PMOS
++Level=        49 version=3.3.0
++Tnom=27.0
++Nch= 3.533024E+17  Tox=9E-09 Xj=1.00000E-07
++Lint=6.23e-8 Wint=1.22e-7
++Vth0=-.6732829 K1= .8362093  K2=-8.606622E-02  K3= 1.82
++Dvt0= 1.903801  Dvt1= .5333922  Dvt2=-.1862677
++Nlx= 1.28e-8  W0= 2.1e-6
++K3b= -0.24 Prwg=-0.001 Prwb=-0.323
++Vsat= 103503.2  Ua= 1.39995E-09  Ub= 1.e-19  Uc=-2.73e-11
++Rdsw= 460  U0= 138.7609
++A0= .4716551 Ags=0.12
++Keta=-1.871516E-03  A1= .3417965  A2= 0.83
++Voff=-.074182  NFactor= 1.54389  Cit=-1.015667E-03
++Cdsc= 8.937517E-04
++Cdscb= 1.45e-4  Cdscd=1.04e-4
++Dvt0w=0.232 Dvt1w=4.5e6 Dvt2w=-0.0023
++Eta0= 6.024776E-02  Etab=-4.64593E-03
++Dsub= .23222404
++Pclm= .989  Pdiblc1= 2.07418E-02  Pdiblc2= 1.33813E-3
++Drout= .3222404  Pscbe1= 118000  Pscbe2= 1E-09
++Pvag= 0
++kt1= -0.25  kt2= -0.032 prt=64.5
++At= 33000
++Ute= -1.5
++Ua1= 4.312e-9 Ub1= 6.65e-19  Uc1= 0
++Kt1l=0
++vgs_max=4 vds_max=4 vbs_max=4
+
+
+
+
+.temp 30
+.param IB=4u
+.param VCC = 5
+.include params.inc
+
+.option savecurrents
+.control
+  shell rm -rf margin.dat.data  power.dat.data AC.dat.data PSRR.dat.data CMRR.dat.data
+* remove existing files
+  save all alli
+  save all @m.X_AMP.MP_CSA[vdsat]
+  save all @m.X_AMP.MN_ISRC_2[vdsat]
+  op
+  save all
+  write DC_TB.raw
+  op
+  let margin = v(VCC) - @m.X_AMP.MN_ISRC_2[vdsat]- @m.X_AMP.MP_CSA[vdsat]
+  wrdata margin.dat margin
+  let power=-v(vcc) * i(vvcc)
+  wrdata power.dat power
+
+  ac dec 10 1 10G
+  wrdata AC.dat vdb(AMP_OUT_AC) vp(AMP_OUT_AC)
+  wrdata PSRR.dat vdb(AMP_OUT_PSRR) vp(AMP_OUT_PSRR)
+  wrdata CMRR.dat vdb(AMP_OUT_CMRR) vp(AMP_OUT_CMRR)
+  tran 0.1n 10u
+  wrdata TRAN.dat v(AMP_OUT_DC) vp(VIN_AMP)
+  quit 0
+.endc
+
+
+
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /home/shlok/xschem_schematics/AMP_2STG.sym # of pins=6
+** sym_path: /home/shlok/xschem_schematics/AMP_2STG.sym
+** sch_path: /home/shlok/xschem_schematics/AMP_2STG.sch
+.subckt AMP_2STG NBIAS VSS AMP_OUT VINP VINM VCC
+*.iopin NBIAS
+*.iopin VSS
+*.iopin AMP_OUT
+*.iopin VINP
+*.iopin VINM
+*.iopin VCC
+MN_ISRC_1 S NBIAS VSS VSS cmosn w=W_MN_ISRC_1 l=L_MN_ISRC_1 m=1
+MP_ISRC OTA_OUT PBIAS VCC VCC cmosp w=W_MP_DIO l=L_MP_DIO m=1
+MN_INM PBIAS VINP S S cmosn w=W_MN_INM l=L_MN_INM m=1
+MP_INP OTA_OUT VINM S S cmosn w=W_MN_INM l=L_MN_INM m=1
+MP_DIO PBIAS PBIAS VCC VCC cmosp w=W_MP_DIO l=L_MP_DIO m=1
+CL OTA_OUT AMP_OUT 'C_MILLER' m=1
+MP_CSA AMP_OUT OTA_OUT VCC VCC cmosp w=W_MP_CSA l=L_MP_CSA m=1
+MN_ISRC_2 AMP_OUT NBIAS VSS VSS cmosn w=W_MN_ISRC_2 l=L_MN_ISRC_2 m=1
+MN_DIO NBIAS NBIAS VSS VSS cmosn w=W_MN_DIO l=L_MN_DIO m=1
+.ends
+
+.end
+

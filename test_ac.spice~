@@ -1,0 +1,118 @@
+** sch_path: /home/shlok/.xschem/xschem_library/xschem_sky130/sky130_tests/test_ac.sch
+**.subckt test_ac
+XM1 G PLUS S GND sky130_fd_pr__nfet_01v8_lvt L=2 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM2 OUT MINUS S GND sky130_fd_pr__nfet_01v8_lvt L=2 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM4 net7 BIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=1 m=1
+XM3 OUT G VCC VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=1 m=1
+XM5 G G VCC VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0
++ mult=1 m=1
+Vtail S net7 0
+.save i(vtail)
+V2 VCC GND 1.8
+V3 PLUS GND 0.91
+V4 IN GND 0 ac 1 0 sin(0 1m 100meg 0 0 0)
+C2 MINUS IN 1T m=1
+L1 OUT MINUS 1T m=1
+E1 net1 GND S GND 1
+XM6 net2 OUT net1 GND sky130_fd_pr__nfet_01v8_lvt L=2 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=1 m=1
+E2 net2 GND OUT GND 1
+XM7 BIAS BIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=1 m=1
+Vtail1 net3 BIAS 0
+.save i(vtail1)
+I0 VCC net3 10u
+XM8 NBIAS NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=2 m=2
+Vtail2 net4 NBIAS 0
+.save i(vtail2)
+I1 VCC_1V0 net4 10u
+V1 VCC_1V0 GND 1
+XM9 PBIAS NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=2 m=2
+XM10 PBIAS PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM11 net5 PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM12 PBIAS_CMFB_AMP INP_SHIFT net5 net5 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM13 PBIAS_CMFB_AMP INM_SHIFT net5 net5 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM14 PBIAS_DIO VREF net5 net5 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+XM15 PBIAS_DIO VREF net5 net5 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+V5 VREF GND 0.3
+V_INM INM GND 0.4
+XM16 PBIAS_DIO NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=2 m=2
+XM17 PBIAS_DIO PBIAS_DIO VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM18 PBIAS_CMFB_AMP NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=2 m=2
+XM19 PBIAS_CMFB_AMP PBIAS_DIO VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM20 NBIAS_CMFB_AMP PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58
++ nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM21 NBIAS_CMFB_AMP NBIAS_CMFB_AMP GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM22 INP PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XR1 INP_SHIFT INP GND sky130_fd_pr__res_xhigh_po_0p35 L=15 mult=1 m=1
+XM23 INP_SHIFT NBIAS_CMFB_AMP GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM24 INM PBIAS_CMFB_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XR2 INM_SHIFT INM GND sky130_fd_pr__res_xhigh_po_0p35 L=15 mult=1 m=1
+XM25 INM_SHIFT NBIAS_CMFB_AMP GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM26 net6 PBIAS VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=8 m=8
+XM27 INP INP_SHIFT net6 net6 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0
++ sb=0 sd=0 mult=4 m=4
+XM28 PBIAS_DIO_AMP INM_SHIFT net6 net6 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM29 PBIAS_DIO_AMP NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725
++ sa=0 sb=0 sd=0 mult=4 m=4
+XM30 INP NBIAS GND GND sky130_fd_pr__nfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725 nrs=0.0725 sa=0 sb=0
++ sd=0 mult=4 m=4
+XM31 INP PBIAS_DIO_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58 nrd=0.0725
++ nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+XM32 PBIAS_DIO_AMP PBIAS_DIO_AMP VCC_1V0 VCC_1V0 sky130_fd_pr__pfet_01v8_lvt L=1 W=4 nf=1 ad=1.16 as=1.16 pd=8.58 ps=8.58
++ nrd=0.0725 nrs=0.0725 sa=0 sb=0 sd=0 mult=4 m=4
+**** begin user architecture code
+.lib ~/open_pdks_git/sky130/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+
+
+
+*.include test_ac.save
+.option reltol=1e-5
++  abstol=1e-14 savecurrents
+.control
+  save all
+  op
+  remzerovec
+  write test_ac.raw
+  set appendwrite
+  ac dec 10 1 1e12
+  remzerovec
+  write test_ac.raw
+  tran 0.1n 100n
+  write test_ac.raw
+  save all
+  save v(INM_SHIFT)
+  dc V_INM 0.6 1 0.1
+  write dc_ac.dat
+  write test_ac_dc.raw
+.endc
+
+
+
+
+**** end user architecture code
+**.ends
+.end

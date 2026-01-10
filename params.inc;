@@ -1,0 +1,14 @@
+.param C_MILLER = 0.1e-12
+.param W_MN_DIO = 5e-6
+.param L_MN_DIO = 2e-6
+.param W_MN_ISRC_1 = 5e-6 
+.param L_MN_ISRC_1 = 2e-6
+.param W_MN_ISRC_2 = 5e-6 
+.param L_MN_ISRC_2 = 2e-6
+.param W_MN_INM = 10e-6 
+.param L_MN_INM = 1e-6
+.param W_MP_DIO = 5e-6 
+.param L_MP_DIO = 2e-6
+.param W_MP_CSA = 5e-6 
+.param L_MP_CSA = 2e-6]
+.param CL=1p
