@@ -11,11 +11,7 @@
     "href": "RTR/Zener.html",
     "title": "Rail-to-Rail Input Amplifiers",
     "section": "",
-    "text": "An electronic zener is used",
-    "crumbs": [
-      "Strong Inversion",
-      "Electronic Zener"
-    ]
+    "text": "An electronic zener is used"
   },
   {
     "objectID": "RTR/Min_Max_Selector.html",
@@ -34,30 +30,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Rail-to-Rail Input Amplifier",
+    "title": "1V Rail-to-Rail Amp with CMFB",
     "section": "",
-    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
-  },
-  {
-    "objectID": "index.html#abstract",
-    "href": "index.html#abstract",
-    "title": "Rail-to-Rail Input Amplifier",
-    "section": "",
-    "text": "In this open-source reproducible tutorial, we try to understand, simulate and explain some popular choices found in literature survey for design of amplifiers with rail-to-rail input stage under various constraints on supply and region of CMOS operation[1], [2], [3]."
-  },
-  {
-    "objectID": "index.html#introduction",
-    "href": "index.html#introduction",
-    "title": "Rail-to-Rail Input Amplifier",
-    "section": "2 Introduction",
-    "text": "2 Introduction\nThe input stage of op-amp may need to tolerate rail-to-rail swing in case of unity feedback configuration under a common mode that swings rail to rail [1]. Usually, there is only a single input pair and the input is directly fed to the gates of this pair. Rail-to-Rail input swing in unity configuration requires one of the following choices:\n\nUse of complementary input pairs - a PMOS and an NMOS input pair\nShifting the common-mode of the input fed to a single input pair\n\n\n\n\nVarious choices possible\n\n\nThe first consideration is supply voltage, for supplies below ~1.2V, the use of complementary input pairs becomes infeasible. Next, the choice of whether to keep the input pair in strong or weak-inversion affects the gm-variation across input variation. Once these two constraints are settled, various creative topologies can be employed competing against each other on following specs:\n\nCMRR\nTHD\nSlew Rate\nPower burnt\nUGB variation across input variation\n\nThe fundamental relations to be kepy in mind are:\n\nIn Weak inversion, \\[\n\\frac{g_m}{I_D} = \\text{Constant}\n\\]\nIn Strong Inversion, \\[\ng_m = \\sqrt{2\\beta I_D} = \\frac{2I_D}{V_{ov}}\n\\]"
-  },
-  {
-    "objectID": "index.html#methodology",
-    "href": "index.html#methodology",
-    "title": "Rail-to-Rail Input Amplifier",
-    "section": "3 Methodology",
-    "text": "3 Methodology\nWe have studied a collection of literature reviews on such techniques and have selected few canonical or exotic topologies for simulation in proprietary pdk for our understanding. We have also replicated our learnings on open-source skywater 130nm pdk simulated on colab. You can access details of each topology via the left sidebar. All the colab notebooks are accessible on our github and are simulatable on a single click. We look forward to collaboration and feedback on future extension of this work.\nAI was used to generate qualitative plots in this work."
+    "text": "Introduction\nIn this colab, a 1V Rail-to-Rail input stage is simulated using NGSpice\nThe reference paper can be accessed at 1-V rail-to-rail operational amplifiers in standard CMOS technology\nThis notebook, the xschem schematic and the spice netlist can be accessed here\nIn next 3 cells, we are just installing the required modules and skywater files\n\n\nNote\n(I have followed Stefano Schippers’ tutorial (https://xschem.sourceforge.io/stefan/xschem_man/video_tutorials/install_xschem_sky130_and_ngspice.mp4) to install and build the skywater files and then uploaded the minimal 100mb subset here. I strongly recommend that you run Stefano’s setup at your end to build files from original skywater repo as the files that I am uploading have been moved across many OS multiple times and might get inadvertently corrupted. If there is a better way to communicate the above information to emphasize this github repo is not my original work as well as the risks involved, do let me know!)\n\n\nCode\n%%capture\n! python --version  # Pyspice works with python  3.9 or lower\n!pip install -q gdown\n!git clone https://github.com/ShlokVaibhav/SkyWater130nm_subset.git\n\n\n\n\nCode\n%%capture\n!pip install matplotlib\n!pip install numpy\n!pip install scipy\n\n\n\n\nCode\n%%capture\nimport sys\nimport subprocess\nimport platform\n\ndef install_ngspice():\n    system = platform.system()\n    if system == \"Linux\":\n        # Google Colab\n        subprocess.run([\"apt-get\", \"update\"], check=True)\n        subprocess.run([\"apt-get\", \"-y\", \"install\", \"ngspice\"], check=True)\n\n    elif system == \"Windows\":\n        # Conda-based Windows\n        subprocess.run(\n            [\"conda\", \"install\", \"-y\", \"-c\", \"conda-forge\", \"ngspice\"],\n            shell=True\n        )\n    else:\n        raise RuntimeError(\"Unsupported OS\")\n\ninstall_ngspice()\n\n\n\n\nSchematic and Results\nThe schematic to be simulated:(Generated using Xschem and skywater130) The scheme is straightforward, we use a negative feedback on the input common-mode voltage to generate two level-shifted inputs that are clamped to a VREF=300mV, this is then passed to the input pair of actual amp. \n\n\nCode\nsubprocess.call(\"ngspice -b -o output.log res_amp_working.spice\", shell=True)\n\n\n0\n\n\nThe key nodes- The applied input, the output and the level shifted inputs and outputs compared with the reference are plotted. The Shifted inputs do get clamped to VREF=300mV while the actual input and output swing almost rail-to-rail. The clamping is underwhelming as I am still in process of characterizing skywater130 devices and this is a bare-minimum design\n\n\nCode\n#The key node voltages can be added\nimport numpy as np\nimport matplotlib.pyplot as plt\ncolumns = [\"VIN\", \"VOUT\", \"VREF\", \"VIN_SHIFTED\", \"VOUT_SHIFTED\"]\nfile_name = \"res_dc_ana\"\n\ndef Gen_sweep_plot(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN, label=\"VIN\")\n  plt.plot(VIN, VOUT, label=\"VOUT\")\n  plt.plot(VIN, VIN_SHIFTED, label=\"VIN_SHIFTED\")\n  plt.plot(VIN, VREF, label=\"VREF\")\n  plt.plot(VIN, VOUT_SHIFTED, label=\"VOUT_SHIFTED\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"VOUT\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nGen_sweep_plot(columns, file_name)\n\n\n\n\n\n\n\n\n\nThe input error is plotted now: (It is not flat in the middle because the skywater transistors have not yet been characterized)\n\n\nCode\ndef Plot_input_error(columns, file_name):\n  data = np.loadtxt(file_name)\n  VIN = data[:, 1]   # first column\n  VOUT = data[:, 3]   # first column\n  VREF = data[:, 5]  # second column\n  VIN_SHIFTED = data[:, 7]  # second column\n  VOUT_SHIFTED = data[:, 9]  # second column\n  plt.plot(VIN, VIN-VOUT, label=\"Input Error\")\n  plt.xlabel(\"VIN\")\n  plt.ylabel(\"Input Error\")\n  plt.legend()\n  plt.grid(True)\n  plt.show()\n  return\n\nPlot_input_error(columns, file_name)"
   },
   {
     "objectID": "Analog_Specs.html",
